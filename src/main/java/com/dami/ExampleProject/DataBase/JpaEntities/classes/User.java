@@ -5,16 +5,16 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "users")
 public class User {
-
     @Id
+    @Column(name = "id")
     private String id;
 
-    @Column(name = "UserName")
+    @Column(name = "username")
     private String userName;
 
+    @Column(name = "password")
     private String password;
 
-    // Getters and setters
     public String getId() {
         return id;
     }
@@ -39,3 +39,9 @@ public class User {
         this.password = password;
     }
 }
+
+
+
+
+
+

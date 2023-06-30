@@ -12,16 +12,16 @@ public class Statistics {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer profileId;
 
-    @Column(name = "DateMade")
+    @Column(name = "datemade")
     private LocalDateTime dateMade;
 
-    @Column(name = "DateSeen")
+    @Column(name = "dateseen")
     private LocalDateTime dateSeen;
 
-    @Column(name = "TimePlayed")
+    @Column(name = "timeplayed")
     private String timePlayed;
 
-    @Column(name = "Money")
+    @Column(name = "money")
     private Integer money;
 
     @OneToOne

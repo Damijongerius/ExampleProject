@@ -1,12 +1,13 @@
 package com.dami.ExampleProject.Services;
 
 import com.dami.ExampleProject.DataBase.JpaEntities.*;
-import com.dami.ExampleProject.DataBase.JpaEntities.classes.Profile;
-import com.dami.ExampleProject.DataBase.JpaEntities.classes.Statistics;
-import com.dami.ExampleProject.DataBase.JpaEntities.classes.User;
+import com.dami.ExampleProject.DataBase.JpaEntities.classes.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -31,39 +32,46 @@ public class DatabaseService {
         instance = this;
     }
 
-    public void insertData() {
-        // Create and save entities
-        User user = new User();
-        user.setId("1");
-        user.setUserName("john");
-        user.setPassword("password");
-        userRepository.save(user);
-
-        // Insert data into other tables/entities as needed
-    }
-
-    public void getUsersData() {
+    public List<MoneyLeaderBoard> getUsersData() {
         List<User> users = userRepository.findAll();
+        List<MoneyLeaderBoard> userLeaderboard = new ArrayList<>();
 
         for (User user : users) {
-            Profile profile = profileRepository.findByUsersId(user.getId());
+            Profile profile = profileRepository.findByUserId(user.getId());
             Statistics statistics = statisticsRepository.findByProfileId(profile.getId());
 
             if (statistics != null) {
+
                 int money = statistics.getMoney();
                 String username = user.getUserName();
                 String saveName = profile.getSaveName();
-
-                System.out.println("Username: " + username);
-                System.out.println("Save Name: " + saveName);
-                System.out.println("Money: $" + money);
-                System.out.println("--------------------");
+                userLeaderboard.add(new MoneyLeaderBoard(username,saveName,(float)money));
             }
         }
+
+        return  userLeaderboard;
     }
 
-    public static DatabaseService getInstance(){
-        return instance;
+    public List<PlayTimeLeaderBoard> getPlayTimeUsers() {
+        List<User> users = userRepository.findAll();
+        List<PlayTimeLeaderBoard> userLeaderboard = new ArrayList<>();
+
+        for (User user : users) {
+            Profile profile = profileRepository.findByUserId(user.getId());
+            Statistics statistics = statisticsRepository.findByProfileId(profile.getId());
+
+            if (statistics != null) {
+
+                String playTime = statistics.getTimePlayed();
+                String username = user.getUserName();
+                String saveName = profile.getSaveName();
+                userLeaderboard.add(new PlayTimeLeaderBoard(username,saveName,playTime));
+            }
+        }
+
+
+        return  userLeaderboard;
+
     }
 
     // Other methods for performing database operations

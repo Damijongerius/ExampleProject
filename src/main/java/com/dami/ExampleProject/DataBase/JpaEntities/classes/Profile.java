@@ -5,24 +5,23 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "profile")
 public class Profile {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @Column(name = "id")
+    private int id;
 
-    @Column(name = "SaveName")
+    @Column(name = "savename")
     private String saveName;
 
     @ManyToOne
     @JoinColumn(name = "users_id")
     private User user;
 
-    // Getters and setters
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -42,3 +41,8 @@ public class Profile {
         this.user = user;
     }
 }
+
+
+
+
+
